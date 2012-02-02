@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Ben Dornis</authors>
+    <owners />
+    <projectUrl>https://github.com/Buildstarted/Jang</projectUrl>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="4.0.7" />
+      <dependency id="WebActivator" version="1.5" />
+      <dependency id="jQuery" version="1.7.1" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Web.DynamicData" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Web.Routing" targetFramework="" />
+    </frameworkAssemblies>
+    <id>Jang</id>
+    <title />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The client's Jang to the server's Jin.</description>
+  </metadata>
+  <files>
+    <file src="jquery.jazz.js" target="content\scripts\jquery.jazz.js" />
+    <file src="web.config.transform" target="content\Views\web.config.transform" />
+    <file src="bin\Release\Jang.dll" target="lib\Jang.dll" />
+  </files>
+</package>

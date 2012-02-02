@@ -1,0 +1,10 @@
+﻿<configuration>
+	<system.web.webPages.razor>
+		<pages>
+			<namespaces>
+				<add namespace="Jang" />
+			</namespaces>
+		</pages>
+	</system.web.webPages.razor>
+
+</configuration>
