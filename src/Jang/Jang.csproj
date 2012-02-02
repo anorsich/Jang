@@ -59,9 +59,7 @@
     <Compile Include="ViewNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Jang.nuspec" />
     <None Include="packages.config" />
-    <None Include="web.config.transform" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jang.js" />
