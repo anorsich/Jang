@@ -23,7 +23,7 @@ namespace Jang.Mvc
         /// </summary>
         static HtmlExtensionMethods()
         {
-            ViewEngine = new JazzViewEngine();
+            ViewEngine = Infrastructure.DependencyResolver.Current.GetService<Jang.IViewEngine>();
         }
 
         /// <summary>

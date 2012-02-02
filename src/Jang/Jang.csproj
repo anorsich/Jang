@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="IViewEngine.cs" />
     <Compile Include="Mvc\JangController.cs" />
     <Compile Include="Mvc\JangResult.cs" />

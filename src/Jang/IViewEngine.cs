@@ -32,6 +32,10 @@ namespace Jang
         /// <returns>Javascript string to execute the render on the clientside</returns>
         string Render(string template, string destination);
 
+        /// <summary>
+        /// The rendering call to update the view with a model
+        /// </summary>
+        /// <returns>Returns a javascript return statement to generate the view</returns>
         string Renderer();
 
         /// <summary>

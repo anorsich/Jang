@@ -7,18 +7,22 @@
 namespace Jang
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// Jazz View Engine for Jang
     /// </summary>
     public class JazzViewEngine : JavascriptViewEngine
     {
-        public override string Extension { get { return ".jazz"; } }
-
-        public override string Render(string template, string destination)
+        /// <summary>
+        /// Gets the extention assosciated with this view engine
+        /// </summary>
+        public override string Extension
         {
-            //return string.Format("jang.render('{0}', '{1}', model, function(template, model) {{ return template.jazz(model); }});", template, destination);
-            return string.Format("jang.render('{0}', '{1}', model);", template, destination);
+            get { return ".jazz"; }
         }
 
+        /// <summary>
+        /// The rendering call to update the view with a model
+        /// </summary>
+        /// <returns>Returns a javascript return statement to generate the view</returns>
         public override string Renderer()
         {
             return "return $('#' + template).jazz(model);";

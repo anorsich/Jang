@@ -14,14 +14,30 @@ namespace Jang
     using System.Web.Mvc;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Base ViewEngine for javascript
     /// </summary>
     public abstract class JavascriptViewEngine : IViewEngine
     {
-        //File locations
-        public string[] Locations { get; private set; }
+        /// <summary>
+        /// Gets the locations to search for views
+        /// </summary>
+        public string[] Locations
+        {
+            get;
+            private set;
+        }
 
-        public abstract string Extension { get; }
+        /// <summary>
+        /// Gets the extension for this view engine
+        /// </summary>
+        public abstract string Extension
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Stores a Dictionary of templates called
+        /// </summary>
         protected static readonly ConcurrentDictionary<string, string> Cache;
 
         static JavascriptViewEngine()
@@ -38,7 +54,10 @@ namespace Jang
             Locations = defaultLocations.Concat((!IsNullOrEmpty(locations)) ? locations : new string[] { }).ToArray();
         }
 
-        public abstract string Render(string template, string destination);
+        public virtual string Render(string template, string destination)
+        {
+            return string.Format("jang.render('{0}', '{1}', model);", template, destination);
+        }
 
         private static bool IsNullOrEmpty(IEnumerable<string> source)
         {
@@ -76,7 +95,17 @@ namespace Jang
             fullPath = null;
             foreach (var path in Locations)
             {
-                string sourcePath = HttpContext.Current.Server.MapPath(Path.Combine(path, controllerName, template + Extension));
+                string sourcePath;
+                if (template.StartsWith("~"))
+                {
+                    //it's an absolute path
+                    sourcePath = HttpContext.Current.Server.MapPath(template);
+                }
+                else
+                {
+                    //relative path
+                    sourcePath = HttpContext.Current.Server.MapPath(Path.Combine(path, controllerName, template + Extension));
+                }
                 if (PathExists(sourcePath))
                 {
                     //we need just the location path in this case...
