@@ -14,6 +14,13 @@ namespace Jang
     public class Template
     {
         public string FullPath { get; set; }
+
+        private string _viewName;
+        public string ViewName
+        {
+            get { return _viewName; }
+            set { _viewName = Scrub(value); } 
+        }
         public Template(string path, string fullPath)
         {
             //we need to strip out the full path here

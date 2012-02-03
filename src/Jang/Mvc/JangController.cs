@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -23,18 +25,27 @@ namespace Jang.Mvc
         /// <returns>text/html result of a compilation of all view engine views</returns>
         public ActionResult Views()
         {
+            List<Tuple<string, string>> viewNames = new List<Tuple<string, string>>();
             StringBuilder sb = new StringBuilder();
             foreach (var templateFile in HtmlExtensionMethods.ViewEngine.GetTemplates())
             {
-                string templateName = string.Format("{0}", templateFile.Id);
-
-                sb.AppendFormat("<script type='text/template' id='{0}'>", templateName);
+                viewNames.Add(new Tuple<string, string>(templateFile.Id, templateFile.ViewName));
+                sb.AppendFormat("<script type='text/template' id='{0}'>", templateFile.Id);
                 sb.Append(System.IO.File.ReadAllText(templateFile.FullPath));
                 sb.Append("</script>");
             }
 
             sb.AppendLine();
-            sb.AppendLine("<script type='text/javascript'>jang.templatesDownloaded = true;</script>");
+            sb.AppendLine("<script type='text/javascript'>");
+            sb.AppendLine("jang.templatesDownloaded = true;");
+            sb.AppendLine("jang.views = [");
+            foreach (var view in viewNames) {
+                sb.Append("{ 'view': '").Append(view.Item2).Append("',");
+                sb.Append("'fullPath': '").Append(view.Item1).AppendLine("' },");
+            }
+            sb.Length -= 3;
+            sb.AppendLine("];");
+            sb.AppendLine("</script>");
 
             return new ContentResult
             {
@@ -52,13 +63,15 @@ namespace Jang.Mvc
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                if (line.Contains("{viewEngineRender}")) {
+                if (line.Contains("{viewEngineRender}"))
+                {
                     line = line.Replace("{viewEngineRender}", HtmlExtensionMethods.ViewEngine.Renderer());
                 }
                 sb.AppendLine(line);
             }
 
-            return new ContentResult() {
+            return new ContentResult()
+            {
                 Content = sb.ToString(),
                 ContentType = "application/javascript"
             };

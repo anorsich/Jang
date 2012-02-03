@@ -1,7 +1,8 @@
 ﻿var jang = {
     templatesDownloaded: false,
     templatesDownloading: false,
-    pendingCallbacks: []
+    pendingCallbacks: [],
+    views: []
 };
 
 jang.__render = function (template, model)
@@ -9,11 +10,29 @@ jang.__render = function (template, model)
     {viewEngineRender}
 };
 
+jang.renderView = function (view, model) {
+	var viewName = jang.__findView(view);
+	return jang.__render(viewName, model);
+};
+
+jang.__findView = function (view) {
+	for (var i in jang.views) {
+		if (jang.views[i].view == view) {
+			return jang.views[i].fullPath;
+		}
+	}
+
+	return null;
+};
+
 jang.render = function (id, destination, model) {
-    //queue this up for rendering
-    jang.ensureTemplatesExist(function () {
-        $('#' + destination).after($(jang.__render(id, model)));
-    });
+	//queue this up for rendering
+	jang.__ensureTemplatesExist(function () {
+		console.log(destination);
+		var result = $(jang.__render(id, model));
+		console.log(result);
+		$('#' + destination).after($(jang.__render(id, model)));
+	});
 };
 
 jang.ajax = function (settings) {
@@ -29,27 +48,33 @@ jang.ajax = function (settings) {
     $.ajax(ajaxSettings);
 };
 
-jang.ensureTemplatesExist = function (callback) {
-    if (!jang.templatesDownloaded && !jang.templatesDownloading) {
-        jang.templatesDownloading = true;
+jang.__ensureTemplatesExist = function (callback) {
+	if (!jang.templatesDownloaded && !jang.templatesDownloading) {
+		jang.templatesDownloading = true;
 
-        $.ajax({
-            url: '/jang/views',
-            success: function (result) {
-                $('body').append(result);
-                jang.templatesDownloaded = true;
-                jang.ensureTemplatesExist(callback);
-                for (var i in jang.pendingCallbacks) {
-                    jang.pendingCallbacks[i]();
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    } else if (jang.templatesDownloading) {
-        jang.pendingCallbacks.push(callback);
-    } else {
-        callback();
-    }
+		console.log("downloading templates");
+
+		$.ajax({
+			url: '/jang/views',
+			success: function (result) {
+				$('body').append(result);
+				jang.templatesDownloaded = true;
+				console.log("templates downloaded");
+				jang.__ensureTemplatesExist(callback);
+				for (var i in jang.pendingCallbacks) {
+					console.log(i);
+					jang.pendingCallbacks[i]();
+				}
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		});
+	} else if (jang.templatesDownloading) {
+		console.log("still pending download");
+		jang.pendingCallbacks.push(callback);
+	} else {
+		console.log("executing callback");
+		callback();
+	}
 };

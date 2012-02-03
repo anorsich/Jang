@@ -139,7 +139,9 @@ namespace Jang
                 foreach (var filePath in Directory.GetFiles(sourcePath, "*" + Extension, SearchOption.AllDirectories))
                 {
                     string relativePath = filePath.Replace(root, "");
-                    yield return new Template(relativePath, filePath);
+                    yield return new Template(relativePath, filePath) {
+                        ViewName = Path.GetFileNameWithoutExtension(new FileInfo(filePath).Name)
+                    };
                 }
             }
         }
