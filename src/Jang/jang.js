@@ -54,16 +54,16 @@ jang.render = function (id, destination, model) {
 };
 
 jang.ajax = function (settings) {
-    var ajaxSettings = settings || {};
-    var finalSuccess = settings.success || function (e) {
-        throw "not really sure if this is an error or not";
-    };
+	var ajaxSettings = settings || {};
+	var finalSuccess = settings.success || function (e) {
+		console.log("no finalize method created. skipping render");
+	};
 
-    ajaxSettings.success = function (result) {
-        finalSuccess(jang.__render(result.template, result.model));
-    };
+	ajaxSettings.success = function (result) {
+		finalSuccess(jang.__render(result.template, result.model));
+	};
 
-    $.ajax(ajaxSettings);
+	$.ajax(ajaxSettings);
 };
 
 jang.__ensureTemplatesExist = function (callback) {
@@ -71,7 +71,7 @@ jang.__ensureTemplatesExist = function (callback) {
 		jang.templatesDownloading = true;
 
 		$.ajax({
-			url: '/jang/views',
+			url: '{jangViewsUrl}',
 			success: function (result) {
 				$('body').append(result);
 				jang.templatesDownloaded = true;

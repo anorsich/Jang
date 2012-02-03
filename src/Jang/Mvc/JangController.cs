@@ -30,7 +30,7 @@ namespace Jang.Mvc
             foreach (var templateFile in HtmlExtensionMethods.ViewEngine.GetTemplates())
             {
                 viewNames.Add(new Tuple<string, string>(templateFile.Id, templateFile.ViewName));
-                sb.AppendFormat("<script type='text/template' id='{0}'>", templateFile.Id);
+                sb.AppendFormat("<script type='text/x-jquery-tmpl' id='{0}'>", templateFile.Id);
                 sb.Append(System.IO.File.ReadAllText(templateFile.FullPath));
                 sb.Append("</script>");
             }
@@ -56,6 +56,8 @@ namespace Jang.Mvc
 
         public ActionResult Engine()
         {
+            string jangViewsUrl = Url.RouteUrl(new {controller = "jang", action = "views"});
+            
             StringBuilder sb = new StringBuilder();
 
             // read jang.js
@@ -66,6 +68,10 @@ namespace Jang.Mvc
                 if (line.Contains("{viewEngineRender}"))
                 {
                     line = line.Replace("{viewEngineRender}", HtmlExtensionMethods.ViewEngine.Renderer());
+                }
+
+                if (line.Contains("{jangViewsUrl}")) {
+                    line = line.Replace("{jangViewsUrl}", jangViewsUrl);
                 }
                 sb.AppendLine(line);
             }
