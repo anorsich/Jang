@@ -15,7 +15,25 @@ jang.renderView = function (view, model) {
 	return jang.__render(viewName, model);
 };
 
+jang.__scrub = function (text) {
+	var scrubber = /[^A-Za-z0-9_\\-\\s]/g;
+	var spaceRemover = /\\s+/g;
+	text = text.replace(scrubber, "-").trim();
+	text = text.replace(spaceRemover, "-");
+	text = text.replace( /^-*/ , "");
+	text = text.replace( /-*$/ , "");
+	text = text.replace( /--+/ , "-");
+	text = text.toLowerCase();
+	return text;
+}
+
 jang.__findView = function (view) {
+	if (view[0] == '~') { //absolute path
+		view = jang.__scrub(view);
+		return view;
+	}
+
+	view = jang.__scrub(view);
 	for (var i in jang.views) {
 		if (jang.views[i].view == view) {
 			return jang.views[i].fullPath;
@@ -52,14 +70,11 @@ jang.__ensureTemplatesExist = function (callback) {
 	if (!jang.templatesDownloaded && !jang.templatesDownloading) {
 		jang.templatesDownloading = true;
 
-		console.log("downloading templates");
-
 		$.ajax({
 			url: '/jang/views',
 			success: function (result) {
 				$('body').append(result);
 				jang.templatesDownloaded = true;
-				console.log("templates downloaded");
 				jang.__ensureTemplatesExist(callback);
 				for (var i in jang.pendingCallbacks) {
 					console.log(i);
@@ -71,10 +86,8 @@ jang.__ensureTemplatesExist = function (callback) {
 			}
 		});
 	} else if (jang.templatesDownloading) {
-		console.log("still pending download");
 		jang.pendingCallbacks.push(callback);
 	} else {
-		console.log("executing callback");
 		callback();
 	}
 };
