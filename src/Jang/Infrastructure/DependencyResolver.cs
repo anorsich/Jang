@@ -28,7 +28,6 @@ namespace Jang.Infrastructure
 
         public DependencyResolver()
         {
-            Register(typeof(IViewEngine), new JazzViewEngine());
         }
 
         public virtual T GetService<T>()

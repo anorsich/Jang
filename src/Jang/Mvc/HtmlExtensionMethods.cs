@@ -100,7 +100,7 @@ namespace Jang.Mvc
         /// <returns>Returns a string containing the JSON encoded model</returns>
         private static string BuildModelString(object model)
         {
-            return string.Format("var model = {0};", Newtonsoft.Json.JsonConvert.SerializeObject(model));
+            return string.Format("var model = {{ 'Model' : {0} }};", Newtonsoft.Json.JsonConvert.SerializeObject(model));
         }
     }
 }

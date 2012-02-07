@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{57C58CCF-AD20-41CA-9830-F745CBE8DF8A}</ProjectGuid>
+    <ProjectGuid>{D6722758-6C3C-4F89-A337-C39F0FA56F99}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jang</RootNamespace>
-    <AssemblyName>Jang</AssemblyName>
+    <RootNamespace>Jang.JsRender</RootNamespace>
+    <AssemblyName>Jang.JsRender</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\TemplatingTest\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,39 +31,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.7\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="WebActivator">
-      <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\DependencyResolver.cs" />
-    <Compile Include="IViewEngine.cs" />
-    <Compile Include="Mvc\JangController.cs" />
-    <Compile Include="Mvc\JangResult.cs" />
-    <Compile Include="Mvc\JangStartup.cs" />
-    <Compile Include="JavascriptViewEngine.cs" />
-    <Compile Include="Mvc\HtmlExtensionMethods.cs" />
+    <Compile Include="JsRenderViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Template.cs" />
-    <Compile Include="ViewNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="jang.js" />
+    <ProjectReference Include="..\Jang\Jang.csproj">
+      <Project>{57C58CCF-AD20-41CA-9830-F745CBE8DF8A}</Project>
+      <Name>Jang</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

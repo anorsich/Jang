@@ -43,10 +43,10 @@ namespace Jang.Mvc
             }
 
             Template view = HtmlExtensionMethods.ViewEngine.GetTemplate(_template, context);
-            this.Data = new
+            Data = new
             {
                 template = view.Id,
-                model = _model
+                model = new { Model = _model }
             };
 
             base.ExecuteResult(context);

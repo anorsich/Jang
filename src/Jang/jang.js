@@ -5,9 +5,12 @@
     views: []
 };
 
-jang.__render = function (template, model)
-{
-    {viewEngineRender}
+jang.__render = function (template, model) {
+	if (model.Model == undefined) {
+		model = { Model: model }; //i don't like this hack
+	}
+	
+	{viewEngineRender}
 };
 
 jang.renderView = function (view, model) {
@@ -15,9 +18,9 @@ jang.renderView = function (view, model) {
 	return jang.__render(viewName, model);
 };
 
-jang.__scrub = function (text) {
-	var scrubber = /[^A-Za-z0-9_\\-\\s]/g;
-	var spaceRemover = /\\s+/g;
+jang.__scrub = function(text) {
+	var scrubber = /[^A-Za-z0-9_\\-\\s]/g ;
+	var spaceRemover = /\\s+/g ;
 	text = text.replace(scrubber, "-").trim();
 	text = text.replace(spaceRemover, "-");
 	text = text.replace( /^-*/ , "");
@@ -25,7 +28,7 @@ jang.__scrub = function (text) {
 	text = text.replace( /--+/ , "-");
 	text = text.toLowerCase();
 	return text;
-}
+};
 
 jang.__findView = function (view) {
 	if (view[0] == '~') { //absolute path
@@ -46,10 +49,8 @@ jang.__findView = function (view) {
 jang.render = function (id, destination, model) {
 	//queue this up for rendering
 	jang.__ensureTemplatesExist(function () {
-		console.log(destination);
 		var result = $(jang.__render(id, model));
-		console.log(result);
-		$('#' + destination).after($(jang.__render(id, model)));
+		$('#' + destination).after(result);
 	});
 };
 

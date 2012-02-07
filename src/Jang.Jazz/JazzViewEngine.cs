@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Jang
+namespace Jang.Jazz
 {
     /// <summary>
     /// Jazz View Engine for Jang
