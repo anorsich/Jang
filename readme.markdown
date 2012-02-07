@@ -14,15 +14,15 @@ Here is a sample view that generates a list of users from a model.
 
 	//userlist.jazz
 	<ul>
-		@for(var i in model) {
-			@jang.renderView("user", model[i])
+		@for(var i in model.Model) {
+			@jang.renderView("user", model.Model[i])
 		}
 	</ul>
 	
 The above view makes a call to renderView()
 
 	//user.jazz
-	<li>@model.Name</li>
+	<li>@model.Model.Name</li>
 	
 To call this from a typical razor view:
 
