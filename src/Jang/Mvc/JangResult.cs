@@ -38,7 +38,7 @@ namespace Jang.Mvc
             // allow user to specify template?
             if (string.IsNullOrEmpty(_template))
             {
-                //pull from the context
+                // pull from the context
                 _template = context.RouteData.GetRequiredString("action");
             }
 

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Ben Dornis</authors>
+    <owners />
+    <projectUrl>https://github.com/Buildstarted/Jang</projectUrl>
+    <dependencies>
+      <dependency id="Jang" version="1.0.0" />
+    </dependencies>
+    <id>Jang.Jazz</id>
+    <title />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jazz view engine for the Jang MVC Engine.</description>
+  </metadata>
+  <files>
+      <file src="jquery.jazz.js" target="content\scripts\jquery.jazz.js" />
+      <file src="jquery.jazz.min.js" target="content\scripts\jquery.jazz.min.js" />
+      <file src="bin\Release\Jang.Jazz.dll" target="lib\Jang.Jazz.dll" />
+  </files>
+</package>

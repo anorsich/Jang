@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Ben Dornis</authors>
+    <owners />
+    <projectUrl>https://github.com/Buildstarted/Jang</projectUrl>
+    <dependencies>
+      <dependency id="Jang" version="1.0.0" />
+    </dependencies>
+    <id>Jang.JsRender</id>
+    <title />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>jsRender view engine for the Jang MVC Engine.</description>
+  </metadata>
+  <files>
+      <file src="jsrender.js" target="content\scripts\jsrender.js" />
+      <file src="jsrender.min.js" target="content\scripts\jsrender.min.js" />
+      <file src="bin\Release\Jang.JsRender.dll" target="lib\Jang.JsRender.dll" />
+  </files>
+</package>

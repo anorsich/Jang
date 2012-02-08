@@ -18,6 +18,29 @@ namespace Jang
     /// </summary>
     public abstract class JavascriptViewEngine : IViewEngine
     {
+
+        /// <summary>
+        /// Stores a Dictionary of templates called
+        /// </summary>
+        protected static readonly ConcurrentDictionary<string, string> Cache;
+
+        /// <summary>
+        /// Static constructor initializes cache for js templates
+        /// </summary>
+        static JavascriptViewEngine()
+        {
+            Cache = new ConcurrentDictionary<string, string>();
+        }
+
+        protected JavascriptViewEngine(params string[] locations)
+        {
+            var defaultLocations = new[] {
+                "~/Templates" // default locations is root/Templates/{controller}
+            };
+
+            this.Locations = defaultLocations.Concat((!IsNullOrEmpty(locations)) ? locations : new string[] { }).ToArray();
+        }
+
         /// <summary>
         /// Gets the locations to search for views
         /// </summary>
@@ -35,25 +58,6 @@ namespace Jang
             get;
         }
 
-        /// <summary>
-        /// Stores a Dictionary of templates called
-        /// </summary>
-        protected static readonly ConcurrentDictionary<string, string> Cache;
-
-        static JavascriptViewEngine()
-        {
-            Cache = new ConcurrentDictionary<string, string>();
-        }
-
-        protected JavascriptViewEngine(params string[] locations)
-        {
-            var defaultLocations = new[] {
-                "~/Templates" //default locations is root/Templates/{controller}
-            };
-
-            Locations = defaultLocations.Concat((!IsNullOrEmpty(locations)) ? locations : new string[] { }).ToArray();
-        }
-
         public virtual string Render(string template, string destination)
         {
             return string.Format("jang.render('{0}', '{1}', model);", template, destination);
@@ -67,15 +71,14 @@ namespace Jang
         public Template GetTemplate(string template, ControllerContext context)
         {
             string controllerName = context.RouteData.GetRequiredString("controller");
-            string key = string.Format("{0}/{1}{2}", controllerName, template, Extension);
-            var templatePath = Cache.GetOrAdd(key, k =>
-            {
+            string key = string.Format("{0}/{1}{2}", controllerName, template, this.Extension);
+            var templatePath = Cache.GetOrAdd(
+                key, 
+                k => {
                 string fullPath;
 
-                //template exists
                 if (TemplateExists(template, controllerName, out fullPath))
                 {
-                    //javascriptify the full path into a valid id
                     return fullPath;
                 }
 
@@ -93,30 +96,30 @@ namespace Jang
         private bool TemplateExists(string template, string controllerName, out string fullPath)
         {
             fullPath = null;
-            foreach (var path in Locations)
+            foreach (var path in this.Locations)
             {
                 string sourcePath;
                 if (template.StartsWith("~"))
                 {
-                    //it's an absolute path
+                    // it's an absolute path
                     sourcePath = HttpContext.Current.Server.MapPath(template);
                 }
                 else
                 {
-                    //relative path
-                    sourcePath = HttpContext.Current.Server.MapPath(Path.Combine(path, controllerName, template + Extension));
+                    // relative path
+                    sourcePath = HttpContext.Current.Server.MapPath(Path.Combine(path, controllerName, template + this.Extension));
                 }
                 if (PathExists(sourcePath))
                 {
-                    //we need just the location path in this case...
-                    fullPath = Path.Combine(path, controllerName, template + Extension);
+                    // we need just the location path in this case...
+                    fullPath = Path.Combine(path, controllerName, template + this.Extension);
                     return true;
                 }
 
-                string sharedPath = HttpContext.Current.Server.MapPath(Path.Combine(path, "shared", template + Extension));
+                string sharedPath = HttpContext.Current.Server.MapPath(Path.Combine(path, "shared", template + this.Extension));
                 if (PathExists(sharedPath))
                 {
-                    fullPath = Path.Combine(path, "shared", template + Extension);
+                    fullPath = Path.Combine(path, "shared", template + this.Extension);
                     return true;
                 }
             }
@@ -133,12 +136,12 @@ namespace Jang
         {
             string root = HttpContext.Current.Server.MapPath("~/");
 
-            foreach (var path in Locations)
+            foreach (var path in this.Locations)
             {
                 string sourcePath = HttpContext.Current.Server.MapPath(string.Format(path));
-                foreach (var filePath in Directory.GetFiles(sourcePath, "*" + Extension, SearchOption.AllDirectories))
+                foreach (var filePath in Directory.GetFiles(sourcePath, "*" + this.Extension, SearchOption.AllDirectories))
                 {
-                    string relativePath = filePath.Replace(root, "");
+                    string relativePath = filePath.Replace(root, string.Empty);
                     yield return new Template(relativePath, filePath) {
                         ViewName = Path.GetFileNameWithoutExtension(new FileInfo(filePath).Name)
                     };

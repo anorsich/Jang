@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5B77E025-E291-4817-B07B-1E9091BAD3CD}"
 	ProjectSection(SolutionItems) = preProject
-		Jang.nuspec = Jang.nuspec
-		jquery.jazz.js = jquery.jazz.js
+		Jang.Jazz\jang.jazz.nuspec = Jang.Jazz\jang.jazz.nuspec
+		Jang.JsRender\jang.jsrender.nuspec = Jang.JsRender\jang.jsrender.nuspec
+		Jang.Mustache\jang.mustache.nuspec = Jang.Mustache\jang.mustache.nuspec
+		Jang\Jang.nuspec = Jang\Jang.nuspec
+		Jang.Underscore\jang.underscore.nuspec = Jang.Underscore\jang.underscore.nuspec
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
-		web.config.transform = web.config.transform
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jang", "Jang\Jang.csproj", "{57C58CCF-AD20-41CA-9830-F745CBE8DF8A}"

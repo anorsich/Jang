@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="IViewEngine.cs" />
+    <None Include="JangStart.cs.pp" />
     <Compile Include="Mvc\JangController.cs" />
     <Compile Include="Mvc\JangResult.cs" />
     <Compile Include="Mvc\JangStartup.cs" />

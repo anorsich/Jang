@@ -23,7 +23,7 @@ namespace Jang
         }
         public Template(string path, string fullPath)
         {
-            //we need to strip out the full path here
+            // we need to strip out the full path here
             string id = Scrub(path);
             Id = id;
             FullPath = fullPath;

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>1.0.0</version>
+    <authors>Ben Dornis</authors>
+    <owners />
+    <projectUrl>https://github.com/Buildstarted/Jang</projectUrl>
+    <dependencies>
+      <dependency id="Jang" version="1.0.0" />
+    </dependencies>
+    <id>Jang.Mustache</id>
+    <title />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Mustache view engine for the Jang MVC Engine.</description>
+  </metadata>
+  <files>
+    <file src="mustache.js" target="content\scripts\mustache.js" />
+    <file src="mustache.min.js" target="content\scripts\mustache.min.js" />
+    <file src="bin\Release\Jang.Mustache.dll" target="lib\Jang.Mustache.dll" />
+  </files>
+</package>
