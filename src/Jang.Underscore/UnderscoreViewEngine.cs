@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jang.Mustache
+namespace Jang.Underscore
 {
-    public class MustacheViewEngine : JavascriptViewEngine
+    public class UnderscoreViewEngine : JavascriptViewEngine
     {
         public override string Extension
         {
-            get { return ".mustache"; }
+            get { return ".underscore"; }
         }
 
         public override string Renderer()
         {
-            return "return Mustache.render($(\"#\" + template).text(), model);";
+            return "return _.template($(\"#\" + template).html(), model);";
         }
     }
 }
