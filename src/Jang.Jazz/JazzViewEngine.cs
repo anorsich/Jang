@@ -25,7 +25,9 @@ namespace Jang.Jazz
         /// <returns>Returns a javascript return statement to generate the view</returns>
         public override string Renderer()
         {
-            return "return $('#' + template).jazz(model);";
+            return @"
+                    model = model.Model; //required because of the way jazz works
+                    return $('#' + template).jazz(model);";
         }
     }
 }
